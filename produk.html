@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk - TechStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset dan variabel */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --border: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #1a252f;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+
+        .top-header .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            flex: 0 0 40%;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search-bar button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icons a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .header-icons i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .cart-count {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            padding: 15px 20px;
+            display: block;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            background-color: white;
+            box-shadow: var(--shadow);
+            min-width: 200px;
+            display: none;
+            z-index: 10;
+        }
+
+        .dropdown-menu a {
+            color: var(--text);
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 15px 0;
+            background-color: white;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breadcrumb ul {
+            display: flex;
+        }
+
+        .breadcrumb li {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 10px;
+        }
+
+        .breadcrumb li:last-child {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Product Detail */
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .thumbnail.active {
+            border-color: var(--primary);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 10px 0;
+        }
+
+        .product-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #f1c40f;
+            margin-right: 10px;
+        }
+
+        .rating-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 15px;
+        }
+
+        .original-price {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        .discount {
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .product-description {
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .product-options {
+            margin-bottom: 25px;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .option-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .color-option.active {
+            border-color: var(--primary);
+        }
+
+        .color-black {
+            background-color: #2c3e50;
+        }
+
+        .color-silver {
+            background-color: #bdc3c7;
+        }
+
+        .color-blue {
+            background-color: #3498db;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .quantity-label {
+            margin-right: 15px;
+            font-weight: 600;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            background-color: #f5f5f5;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border: none;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-buy {
+            flex: 1;
+            padding: 12px;
+            font-size: 1.1rem;
+        }
+
+        .btn-cart {
+            flex: 1;
+            padding: 12px;
+            font-size: 1.1rem;
+        }
+
+        .wishlist-btn {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .wishlist-btn:hover {
+            background-color: #f9f9f9;
+            color: var(--accent);
+        }
+
+        .product-meta {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .meta-label {
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        /* Product Tabs */
+        .product-tabs {
+            margin-bottom: 50px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .tab-headers {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-header {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-header.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            padding: 25px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .specs-table td {
+            padding: 12px 15px;
+        }
+
+        .specs-table td:first-child {
+            font-weight: 600;
+            width: 30%;
+        }
+
+        .review-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .review-author {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        /* Related Products */
+        .related-products {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .product-info-small {
+            padding: 15px;
+        }
+
+        .product-title-small {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .product-price-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .current-price-small {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .original-price-small {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .product-actions-small {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--secondary);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                flex: 1;
+                width: 100%;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                padding: 10px 15px;
+            }
+
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .wishlist-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .tab-headers {
+                flex-direction: column;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-header">
+            <div class="container">
+                <div class="top-left">
+                    <span>Gratis ongkir untuk pembelian di atas Rp 500.000</span>
+                </div>
+                <div class="top-right">
+                    <span>Hubungi kami: (021) 1234-5678</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="container">
+                <div class="logo">
+                    Tech<span>Store</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Cari produk...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-icons">
+                    <a href="#">
+                        <i class="fas fa-user"></i>
+                        <span>Akun</span>
+                    </a>
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Keranjang</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li class="dropdown">
+                        <a href="#">Kategori <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#">Smartphone</a>
+                            <a href="#">Laptop</a>
+                            <a href="#">Tablet</a>
+                            <a href="#">Aksesoris</a>
+                        </div>
+                    </li>
+                    <li><a href="#">Produk Terbaru</a></li>
+                    <li><a href="#">Penawaran Spesial</a></li>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kontak</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <ul>
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#">Smartphone</a></li>
+                <li><a href="#">Samsung</a></li>
+                <li>Galaxy S23 Ultra</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Product Detail -->
+    <section class="container">
+        <div class="product-detail">
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img id="mainImage" src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Samsung Galaxy S23 Ultra">
+                </div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail active" data-image="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80">
+                        <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Samsung Galaxy S23 Ultra">
+                    </div>
+                    <div class="thumbnail" data-image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="Samsung Galaxy S23 Ultra">
+                    </div>
+                    <div class="thumbnail" data-image="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80">
+                        <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Samsung Galaxy S23 Ultra">
+                    </div>
+                    <div class="thumbnail" data-image="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80">
+                        <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Samsung Galaxy S23 Ultra">
+                    </div>
+                </div>
+            </div>
+            <div class="product-info">
+                <h1 class="product-title">Samsung Galaxy S23 Ultra 5G</h1>
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="rating-count">(4.5/5 dari 128 ulasan)</div>
+                </div>
+                <div class="product-price">
+                    <div class="current-price">Rp 15.999.000</div>
+                    <div class="original-price">Rp 17.999.000</div>
+                    <div class="discount">11%</div>
+                </div>
+                <p class="product-description">
+                    Samsung Galaxy S23 Ultra adalah smartphone flagship dengan kamera 200MP yang revolusioner, chipset Snapdragon 8 Gen 2, dan S Pen terintegrasi. Layar Dynamic AMOLED 2X 6.8" dengan refresh rate 120Hz memberikan pengalaman visual yang memukau.
+                </p>
+                <div class="product-options">
+                    <div class="option-group">
+                        <label class="option-label">Warna</label>
+                        <div class="color-options">
+                            <div class="color-option color-black active" data-color="Hitam"></div>
+                            <div class="color-option color-silver" data-color="Silver"></div>
+                            <div class="color-option color-blue" data-color="Biru"></div>
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <label class="option-label" for="storage">Penyimpanan</label>
+                        <select class="option-select" id="storage">
+                            <option value="256">256GB</option>
+                            <option value="512">512GB</option>
+                            <option value="1024">1TB</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="quantity-selector">
+                    <div class="quantity-label">Jumlah:</div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="10">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-accent btn-buy">Beli Sekarang</button>
+                    <button class="btn btn-outline btn-cart">Tambah ke Keranjang</button>
+                    <button class="wishlist-btn">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Kategori:</div>
+                        <div>Smartphone</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Stok:</div>
+                        <div>Tersedia (25 unit)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Garansi:</div>
+                        <div>2 Tahun</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Pengiriman:</div>
+                        <div>Gratis ongkir ke seluruh Indonesia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Tabs -->
+    <section class="container">
+        <div class="product-tabs">
+            <div class="tab-headers">
+                <div class="tab-header active" data-tab="description">Deskripsi</div>
+                <div class="tab-header" data-tab="specs">Spesifikasi</div>
+                <div class="tab-header" data-tab="reviews">Ulasan (128)</div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="description">
+                    <h3>Tentang Produk</h3>
+                    <p>Samsung Galaxy S23 Ultra adalah puncak inovasi smartphone dengan kamera 200MP yang memungkinkan Anda menangkap detail menakjubkan dalam kondisi cahaya apa pun. Dilengkapi dengan S Pen terintegrasi, Anda dapat mencatat, menggambar, dan mengedit dengan presisi.</p>
+                    <p>Ditenagai oleh Snapdragon 8 Gen 2 for Galaxy, performa yang luar biasa untuk gaming, multitasking, dan produktivitas. Baterai 5000mAh memberikan daya tahan sepanjang hari dengan pengisian cepat 45W.</p>
+                    <h3>Fitur Utama</h3>
+                    <ul>
+                        <li>Kamera 200MP dengan Nightography</li>
+                        <li>S Pen terintegrasi dengan respons instan</li>
+                        <li>Layar Dynamic AMOLED 2X 6.8" 120Hz</li>
+                        <li>Snapdragon 8 Gen 2 for Galaxy</li>
+                        <li>Baterai 5000mAh dengan fast charging 45W</li>
+                        <li>Daya tahan IP68 tahan air dan debu</li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="specs">
+                    <table class="specs-table">
+                        <tr>
+                            <td>Layar</td>
+                            <td>Dynamic AMOLED 2X, 6.8", 120Hz, HDR10+</td>
+                        </tr>
+                        <tr>
+                            <td>Chipset</td>
+                            <td>Snapdragon 8 Gen 2 for Galaxy</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>12GB</td>
+                        </tr>
+                        <tr>
+                            <td>Penyimpanan</td>
+                            <td>256GB/512GB/1TB</td>
+                        </tr>
+                        <tr>
+                            <td>Kamera Utama</td>
+                            <td>200MP (wide) + 10MP (tele) + 10MP (periscope) + 12MP (ultrawide)</td>
+                        </tr>
+                        <tr>
+                            <td>Kamera Depan</td>
+                            <td>12MP</td>
+                        </tr>
+                        <tr>
+                            <td>Baterai</td>
+                            <td>5000mAh, fast charging 45W, wireless charging 15W</td>
+                        </tr>
+                        <tr>
+                            <td>Sistem Operasi</td>
+                            <td>Android 13 dengan One UI 5.1</td>
+                        </tr>
+                        <tr>
+                            <td>Konektivitas</td>
+                            <td>5G, Wi-Fi 6E, Bluetooth 5.3, NFC</td>
+                        </tr>
+                        <tr>
+                            <td>Dimensi</td>
+                            <td>163.4 x 78.1 x 8.9 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Berat</td>
+                            <td>234 gram</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane" id="reviews">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author">Ahmad Rizki</div>
+                            <div class="review-date">15 Maret 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>Smartphone terbaik yang pernah saya miliki. Kamera 200MP benar-benar luar biasa, hasil fotonya detail sekali. Baterai tahan seharian dengan penggunaan intensif. S Pen sangat berguna untuk mencatat cepat.</p>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author">Sari Dewi</div>
+                            <div class="review-date">10 Maret 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Layarnya sangat jernih dan responsif. Performa gaming sangat smooth tanpa lag. Desainnya premium dan nyaman dipegang. Harga memang tinggi tapi worth it untuk kualitas yang diberikan.</p>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-author">Budi Santoso</div>
+                            <div class="review-date">5 Maret 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>Kamera night mode-nya sangat bagus, foto di tempat gelap tetap terang dan jelas. Saya suka fitur S Pen untuk edit foto dan dokumen. Sayangnya agak berat dan besar untuk penggunaan satu tangan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="container related-products">
+        <h2 class="section-title">Produk Terkait</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="iPhone 14 Pro">
+                    <span class="product-badge">New</span>
+                </div>
+                <div class="product-info-small">
+                    <h3 class="product-title-small">iPhone 14 Pro Max</h3>
+                    <div class="product-price-small">
+                        <span class="current-price-small">Rp 18.999.000</span>
+                        <span class="original-price-small">Rp 20.999.000</span>
+                    </div>
+                    <div class="product-actions-small">
+                        <a href="#" class="btn">Detail</a>
+                        <a href="#" class="btn btn-accent">Beli</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Samsung S22 Ultra">
+                    <span class="product-badge">Sale</span>
+                </div>
+                <div class="product-info-small">
+                    <h3 class="product-title-small">Samsung S22 Ultra</h3>
+                    <div class="product-price-small">
+                        <span class="current-price-small">Rp 12.499.000</span>
+                        <span class="original-price-small">Rp 14.999.000</span>
+                    </div>
+                    <div class="product-actions-small">
+                        <a href="#" class="btn">Detail</a>
+                        <a href="#" class="btn btn-accent">Beli</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1128&q=80" alt="Google Pixel 7 Pro">
+                </div>
+                <div class="product-info-small">
+                    <h3 class="product-title-small">Google Pixel 7 Pro</h3>
+                    <div class="product-price-small">
+                        <span class="current-price-small">Rp 11.999.000</span>
+                    </div>
+                    <div class="product-actions-small">
+                        <a href="#" class="btn">Detail</a>
+                        <a href="#" class="btn btn-accent">Beli</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="OnePlus 11">
+                    <span class="product-badge">Hot</span>
+                </div>
+                <div class="product-info-small">
+                    <h3 class="product-title-small">OnePlus 11 5G</h3>
+                    <div class="product-price-small">
+                        <span class="current-price-small">Rp 9.999.000</span>
+                        <span class="original-price-small">Rp 11.499.000</span>
+                    </div>
+                    <div class="product-actions-small">
+                        <a href="#" class="btn">Detail</a>
+                        <a href="#" class="btn btn-accent">Beli</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Dapatkan Penawaran Eksklusif</h2>
+            <p>Berlangganan newsletter kami dan dapatkan informasi tentang produk terbaru, penawaran spesial, dan diskon eksklusif.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Masukkan email Anda">
+                <button type="submit">Berlangganan</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>TechStore</h3>
+                    <p>Toko elektronik online terpercaya dengan berbagai pilihan produk berkualitas dan harga terbaik.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Belanja</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Smartphone</a></li>
+                        <li><a href="#">Laptop</a></li>
+                        <li><a href="#">Tablet</a></li>
+                        <li><a href="#">Aksesoris</a></li>
+                        <li><a href="#">Penawaran Spesial</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Bantuan</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Cara Belanja</a></li>
+                        <li><a href="#">Pembayaran</a></li>
+                        <li><a href="#">Pengiriman</a></li>
+                        <li><a href="#">Pengembalian</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Teknologi No. 123, Jakarta</li>
+                        <li><i class="fas fa-phone"></i> (021) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> info@techstore.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 TechStore. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript untuk interaksi halaman produk
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk thumbnail gambar
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+            
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const imageSrc = this.getAttribute('data-image');
+                    mainImage.src = imageSrc;
+                    
+                    // Update active class
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Fungsi untuk pilihan warna
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Fungsi untuk quantity selector
+            const minusBtn = document.querySelector('.quantity-btn.minus');
+            const plusBtn = document.querySelector('.quantity-btn.plus');
+            const quantityInput = document.querySelector('.quantity-input');
+            
+            minusBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value > 1) {
+                    quantityInput.value = value - 1;
+                }
+            });
+            
+            plusBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value < 10) {
+                    quantityInput.value = value + 1;
+                }
+            });
+            
+            // Fungsi untuk tabs
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active class pada headers
+                    tabHeaders.forEach(h => h.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active class pada panes
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                        if (pane.id === tabId) {
+                            pane.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Fungsi untuk wishlist
+            const wishlistBtn = document.querySelector('.wishlist-btn');
+            const wishlistIcon = wishlistBtn.querySelector('i');
+            
+            wishlistBtn.addEventListener('click', function() {
+                wishlistIcon.classList.toggle('far');
+                wishlistIcon.classList.toggle('fas');
+                wishlistIcon.classList.toggle('fa-heart');
+                
+                if (wishlistIcon.classList.contains('fas')) {
+                    alert('Produk telah ditambahkan ke wishlist!');
+                } else {
+                    alert('Produk telah dihapus dari wishlist!');
+                }
+            });
+            
+            // Fungsi untuk tombol tambah ke keranjang
+            const addToCartBtn = document.querySelector('.btn-cart');
+            const cartCount = document.querySelector('.cart-count');
+            
+            addToCartBtn.addEventListener('click', function() {
+                let count = parseInt(cartCount.textContent);
+                const quantity = parseInt(quantityInput.value);
+                count += quantity;
+                cartCount.textContent = count;
+                
+                alert('Produk telah ditambahkan ke keranjang!');
+            });
+        });
+    </script>
+</body>
+</html>
